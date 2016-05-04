@@ -44,20 +44,22 @@ angular.module('schemaForm').directive('pickADate', function () {
 
         if( !externalOptions || !externalOptions.constructor.name === "Object" ){
 
-          if (angular.isDefined(attrs.pickADateOptions) && attrs.pickADateOptions.constructor.name === "Object") {
-            externalOptions = attrs.pickADateOptions;
-          }else {
+          if (angular.isDefined(attrs.options) && attrs.options.constructor.name === "Object") {
+            externalOptions = attrs.options;
+          }
+          else {
             externalOptions = {};
           };
         }
 
+        if (externalOptions.max) {
+            externalOptions.max = formatDate(externalOptions.max);
+        }
+        if (externalOptions.min) {
+            externalOptions.min = formatDate(externalOptions.min);
+        }
+
         var fullOptions = angular.extend({}, basicOptions, externalOptions );
-        if (fullOptions.max) {
-            fullOptions.max = formatDate(fullOptions.max);
-        }
-        if (fullOptions.min) {
-            fullOptions.min = formatDate(fullOptions.min);
-        }
 
         pickedElem = element.pickadate( fullOptions );
 
