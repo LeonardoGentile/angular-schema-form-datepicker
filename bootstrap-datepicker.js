@@ -53,6 +53,12 @@ angular.module('schemaForm').directive('pickADate', function () {
         }
 
         var fullOptions = angular.extend({}, basicOptions, externalOptions );
+        if (fullOptions.max) {
+            fullOptions.max = formatDate(fullOptions.max);
+        }
+        if (fullOptions.min) {
+            fullOptions.min = formatDate(fullOptions.min);
+        }
 
         pickedElem = element.pickadate( fullOptions );
 
@@ -120,7 +126,7 @@ angular.module('schemaForm').directive('pickADate', function () {
             clearTimeout( timeoutDeduplicate );
             timeoutDeduplicate = setTimeout(function() {
               exec( value );
-            }, 1500);
+            }, 500);
             onceOptions();
           };
         }, true);
