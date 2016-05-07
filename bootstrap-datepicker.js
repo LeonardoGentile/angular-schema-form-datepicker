@@ -1,4 +1,6 @@
-angular.module("schemaForm").run(["$templateCache", function($templateCache) {$templateCache.put("directives/decorators/bootstrap/datepicker/datepicker.html","<div class=\"form-group {{form.htmlClass}}\" ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess(), \'has-feedback\': form.feedback !== false }\">\n  <label class=\"control-label\" ng-show=\"showTitle()\">{{form.title}}</label>\n  <div ng-class=\"{\'input-group\': (form.fieldAddonLeft || form.fieldAddonRight)}\">\n    <span ng-if=\"form.fieldAddonLeft\"\n          class=\"input-group-addon\"\n          ng-bind-html=\"form.fieldAddonLeft\"></span>\n    <input ng-show=\"form.key\"\n           style=\"background-color: white\"\n           type=\"text\"\n           class=\"form-control {{form.fieldHtmlClass}}\"\n           schema-validate=\"form\"\n           ng-model=\"$$value$$\"\n           ng-disabled=\"form.readonly\"\n           pick-a-date=\"form.options\"\n           min-date=\"form.minDate\"\n           max-date=\"form.maxDate\"\n           name=\"{{form.key.slice(-1)[0]}}\"\n           format=\"form.format\" />\n    <span ng-if=\"form.fieldAddonRight\"\n          class=\"input-group-addon\"\n          ng-bind-html=\"form.fieldAddonRight\"></span>\n  </div>\n  <span ng-if=\"form.feedback !== false\"\n          class=\"form-control-feedback\"\n          ng-class=\"evalInScope(form.feedback) || {\'glyphicon\': true, \'glyphicon-ok\': hasSuccess(), \'glyphicon-remove\': hasError() }\"></span>\n\n   <div class=\"help-block\"\n         ng-show=\"(hasError() && errorMessage(schemaError())) || form.description\"\n         ng-bind-html=\"(hasError() && errorMessage(schemaError())) || form.description\"></div>\n\n</div>\n");}]);
+angular.module("schemaForm").run(["$templateCache", function($templateCache) {$templateCache.put("directives/decorators/bootstrap/datepicker/datepicker.html","<div\n    ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess(), \'has-feedback\': form.feedback !== false }\"\n    class=\"form-group {{form.htmlClass}}\">\n\n    <label class=\"control-label\" ng-show=\"showTitle()\">{{form.title}}</label>\n\n    <div ng-class=\"{\'input-group\': (form.fieldAddonLeft || form.fieldAddonRight)}\">\n        <span ng-if=\"form.fieldAddonLeft\"\n            class=\"input-group-addon\"\n            ng-bind-html=\"form.fieldAddonLeft\"></span>\n        <input ng-show=\"form.key\"\n            ng-model=\"$$value$$\"\n            ng-disabled=\"form.readonly\"\n            type=\"text\"\n            name=\"{{form.key.slice(-1)[0]}}\"\n            style=\"background-color: white\"\n            schema-validate=\"form\"\n            pick-a-date=\"form.pickadate\"\n            min-date=\"form.minDate\"\n            max-date=\"form.maxDate\"\n            format=\"form.format\"\n            class=\"form-control {{form.fieldHtmlClass}}\"/>\n\n        <span ng-if=\"form.fieldAddonRight\"\n            ng-bind-html=\"form.fieldAddonRight\"\n            class=\"input-group-addon\"></span>\n    </div>\n    <span ng-if=\"form.feedback !== false\"\n        ng-class=\"evalInScope(form.feedback) || {\'glyphicon\': true, \'glyphicon-ok\': hasSuccess(), \'glyphicon-remove\': hasError() }\"\n        class=\"form-control-feedback\"></span>\n\n    <div ng-show=\"(hasError() && errorMessage(schemaError())) || form.description\"\n        ng-bind-html=\"(hasError() && errorMessage(schemaError())) || form.description\"\n        class=\"help-block\"></div>\n</div>\n");
+$templateCache.put("directives/decorators/bootstrap/datepicker/datetimepicker.html","<div\n    pick-a-date-time=\"form\"\n    ng-model=\"$$value$$\"\n    ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess(), \'has-feedback\': form.feedback !== false }\"\n    class=\"form-group {{form.htmlClass}}\">\n\n    <label class=\"control-label\" ng-show=\"showTitle()\">{{form.title}}</label>\n\n    <div ng-class=\"{\'input-group\': (form.fieldAddonLeft || form.fieldAddonRight)}\">\n        <div class=\"row\">\n            <div class=\"col-xs-12 col-sm-8\">\n                <span ng-if=\"form.fieldAddonLeft\"\n                    ng-bind-html=\"form.fieldAddonLeft\"\n                    class=\"input-group-addon\"></span>\n\n                <input ng-show=\"form.key\"\n                    ng-model=\"form.$$date\"\n                    ng-disabled=\"form.readonly\"\n                    type=\"text\"\n                    name=\"{{form.key.slice(-1)[0]}}\"\n                    style=\"background-color: white\"\n                    schema-validate=\"form\"\n                    pick-a-date=\"form.pickadate\"\n                    min-date=\"form.minDate\"\n                    max-date=\"form.maxDate\"\n                    format=\"form.format\"\n                    class=\"form-control {{form.fieldHtmlClass}}\"/>\n\n                <span ng-if=\"form.fieldAddonRight\"\n                    ng-bind-html=\"form.fieldAddonRight\"\n                    class=\"input-group-addon\"></span>\n            </div>\n\n            <div class=\"col-xs-12 col-sm-4\">\n                <span ng-if=\"form.fieldAddonLeft\"\n                    ng-bind-html=\"form.fieldAddonLeft\"\n                    class=\"input-group-addon\"></span>\n\n                <input ng-show=\"form.key\"\n                    ng-model=\"form.$$time\"\n                    ng-disabled=\"form.readonly\"\n                    type=\"text\"\n                    name=\"{{form.key.slice(-1)[0]}}\"\n                    style=\"background-color: white\"\n                    schema-validate=\"form\"\n                    pick-a-time=\"form.pickatime\"\n                    min-time=\"form.minTime\"\n                    max-time=\"form.maxTime\"\n                    format=\"form.format\"\n                    class=\"form-control {{form.fieldHtmlClass}}\"/>\n\n                <span ng-if=\"form.fieldAddonRight\"\n                    class=\"input-group-addon\"\n                    ng-bind-html=\"form.fieldAddonRight\"></span>\n            </div>\n        </div>\n\n    </div>\n\n    <span ng-if=\"form.feedback !== false\"\n        ng-class=\"evalInScope(form.feedback) ||\n            {\'glyphicon\': true, \'glyphicon-ok\': hasSuccess(), \'glyphicon-remove\': hasError() }\"\n        class=\"form-control-feedback\"></span>\n\n    <div ng-show=\"(hasError() && errorMessage(schemaError())) || form.description\"\n        ng-bind-html=\"(hasError() && errorMessage(schemaError())) || form.description\"\n        class=\"help-block\">\n    </div>\n</div>");
+$templateCache.put("directives/decorators/bootstrap/datepicker/timepicker.html","<div\n    ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess(), \'has-feedback\': form.feedback !== false }\"\n    class=\"form-group {{form.htmlClass}}\">\n\n    <label class=\"control-label\" ng-show=\"showTitle()\">{{form.title}}</label>\n\n    <div ng-class=\"{\'input-group\': (form.fieldAddonLeft || form.fieldAddonRight)}\">\n\n        <span ng-if=\"form.fieldAddonLeft\"\n              class=\"input-group-addon\"\n              ng-bind-html=\"form.fieldAddonLeft\"></span>\n        <input ng-show=\"form.key\"\n            ng-model=\"$$value$$\"\n            ng-disabled=\"form.readonly\"\n            type=\"text\"\n            name=\"{{form.key.slice(-1)[0]}}\"\n            style=\"background-color: white\"\n            schema-validate=\"form\"\n            pick-a-time=\"form.pickatime\"\n            min-time=\"form.minTime\"\n            max-time=\"form.maxTime\"\n            format=\"form.format\"\n            class=\"form-control {{form.fieldHtmlClass}}\"/>\n\n        <span ng-if=\"form.fieldAddonRight\"\n            class=\"input-group-addon\"\n            ng-bind-html=\"form.fieldAddonRight\"></span>\n    </div>\n\n    <span ng-if=\"form.feedback !== false\"\n        ng-class=\"evalInScope(form.feedback) || {\'glyphicon\': true, \'glyphicon-ok\': hasSuccess(), \'glyphicon-remove\': hasError() }\"\n        class=\"form-control-feedback\"></span>\n\n    <div ng-show=\"(hasError() && errorMessage(schemaError())) || form.description\"\n        ng-bind-html=\"(hasError() && errorMessage(schemaError())) || form.description\"\n        class=\"help-block\"></div>\n</div>");}]);
 angular.module('schemaForm').directive('pickADate', function () {
 
   //String dates for min and max is not supported
@@ -138,12 +140,150 @@ angular.module('schemaForm').directive('pickADate', function () {
     } // /link
   };
 });
+// The only purpose of that directive is to split date and time into two different fields and combine them together when one of the fields is changed.
+angular.module('schemaForm').directive('pickADateTime', function () {
+
+  return {
+    restrict: 'A',
+    scope: {
+      ngModel: '=',
+      pickADateTime: '=', // the form
+      minDate: '=',
+      maxDate: '=',
+      format: '='
+    },
+    link: function (scope, element, attrs) {
+      var momentDateTime = null;
+
+      //Init
+      if (scope.ngModel && moment(scope.ngModel).isValid()) {
+        momentDateTime = moment(scope.ngModel);
+        pickADateTime.$$date = momentDateTime.format('YYYY-MM-DD');
+        pickADateTime.$$time = momentDateTime.format('HH-mm');
+      } else {
+        momentDateTime = moment.utc().hours('00').minutes('00');
+      }
+
+      scope.$watch('pickADateTime.$$date', function(value) {
+        if (value) {
+          var date = moment(value, 'YYYY-MM-DD');
+
+          momentDateTime
+          .year(date.year())
+          .month(date.month())
+          .date(date.date());
+
+          scope.ngModel = momentDateTime.toISOString();
+        }
+      })
+
+      scope.$watch('pickADateTime.$$time', function(value) {
+        if (value) {
+          var time = value.split(':')
+          momentDateTime.hours(time[0]).minutes(time[1]);
+          scope.ngModel = momentDateTime.toISOString();
+        }
+      })
+    }
+  };
+
+
+})
+angular.module('schemaForm').directive('pickATime', function () {
+
+  var formatTime = function(value) {
+    //Strings or timestamps we make a time of
+    if (angular.isString(value) || angular.isNumber(value)) {
+      return new Date(value);
+    }
+    return value; //We hope it's a time object
+  };
+
+  return {
+    restrict: 'A',
+    require: 'ngModel',
+    scope: {
+      ngModel: '=',
+      pickATime: '=',
+      minTime: '=',
+      maxTime: '=',
+      format: '='
+    },
+    link: function (scope, element, attrs, ngModel) {
+      //Bail out gracefully if pickatime is not loaded.
+      if (!element.pickatime) {
+        return;
+      }
+
+      //By setting formatSubmit to null we inhibit the
+      //hidden field that pickatime likes to create.
+      //We use ngModel formatters instead to format the value.
+      var opts = {
+        onClose: function () {
+          element.blur();
+        },
+        formatSubmit: null
+      };
+      if (scope.pickATime) {
+        angular.extend(opts, scope.pickATime);
+      }
+      element.pickatime(opts);
+
+      //Defaultformat is for json schema date-time is ISO8601
+      //i.e.  "hh:mm"
+      var defaultFormat = "H:i";
+
+      //View format on the other hand we get from the pickadate translation file
+      var viewFormat    = $.fn.pickatime.defaults.format;
+
+      var picker = element.pickatime('picker');
+
+      //The view value
+      ngModel.$formatters.push(function(value) {
+        if (angular.isUndefined(value) || value === null) {
+          return value;
+        }
+
+        //We set 'view' and 'highlight' instead of 'select'
+        //since the latter also changes the input, which we do not want.
+        picker.set('view', value, {format: scope.format || defaultFormat});
+        picker.set('highlight', value, {format: scope.format || defaultFormat});
+
+        //piggy back on highlight to and let pickatime do the transformation.
+        return picker.get('highlight', viewFormat);
+      });
+
+      ngModel.$parsers.push(function() {
+        return picker.get('select', scope.format || defaultFormat);
+      });
+
+      //bind once.
+      if (angular.isDefined(attrs.minTime)) {
+        var onceMin = scope.$watch('minTime', function (value) {
+          if (value) {
+            picker.set('min', formatTime(value));
+            onceMin();
+          }
+        }, true);
+      }
+
+      if (angular.isDefined(attrs.maxTime)) {
+        var onceMax = scope.$watch('maxTime', function (value) {
+          if (value) {
+            picker.set('max', formatTime(value));
+            onceMax();
+          }
+        }, true);
+      }
+    }
+  };
+});
 angular.module('schemaForm').config(
 ['schemaFormProvider', 'schemaFormDecoratorsProvider', 'sfPathProvider',
   function(schemaFormProvider,  schemaFormDecoratorsProvider, sfPathProvider) {
 
     var datepicker = function(name, schema, options) {
-      if (schema.type === 'string' && (schema.format === 'date' || schema.format === 'date-time')) {
+      if (schema.type === 'string' && (schema.format === 'date')) {
         var f = schemaFormProvider.stdFormObj(name, schema, options);
         f.key  = options.path;
         f.type = 'datepicker';
@@ -163,6 +303,63 @@ angular.module('schemaForm').config(
     schemaFormDecoratorsProvider.createDirective(
       'datepicker',
       'directives/decorators/bootstrap/datepicker/datepicker.html'
+    );
+  }
+]);
+
+angular.module('schemaForm').config(
+['schemaFormProvider', 'schemaFormDecoratorsProvider', 'sfPathProvider',
+  function(schemaFormProvider,  schemaFormDecoratorsProvider, sfPathProvider) {
+
+    var datetimepicker = function(name, schema, options) {
+      if (schema.type === 'string' && (schema.format === 'date-time')) {
+        var f = schemaFormProvider.stdFormObj(name, schema, options);
+        f.key  = options.path;
+        f.type = 'datetimepicker';
+        options.lookup[sfPathProvider.stringify(options.path)] = f;
+        return f;
+      }
+    };
+
+    schemaFormProvider.defaults.string.unshift(datetimepicker);
+
+    //Add to the bootstrap directive
+    schemaFormDecoratorsProvider.addMapping(
+      'bootstrapDecorator',
+      'datetimepicker',
+      'directives/decorators/bootstrap/datepicker/datetimepicker.html'
+    );
+    schemaFormDecoratorsProvider.createDirective(
+      'datetimepicker',
+      'directives/decorators/bootstrap/datepicker/datetimepicker.html'
+    );
+  }
+]);
+angular.module('schemaForm').config(
+['schemaFormProvider', 'schemaFormDecoratorsProvider', 'sfPathProvider',
+  function(schemaFormProvider,  schemaFormDecoratorsProvider, sfPathProvider) {
+
+    var timepicker = function(name, schema, options) {
+      if (schema.type === 'string' && (schema.format === 'time')) {
+        var f = schemaFormProvider.stdFormObj(name, schema, options);
+        f.key  = options.path;
+        f.type = 'timepicker';
+        options.lookup[sfPathProvider.stringify(options.path)] = f;
+        return f;
+      }
+    };
+
+    schemaFormProvider.defaults.string.unshift(timepicker);
+
+    //Add to the bootstrap directive
+    schemaFormDecoratorsProvider.addMapping(
+      'bootstrapDecorator',
+      'timepicker',
+      'directives/decorators/bootstrap/datepicker/timepicker.html'
+    );
+    schemaFormDecoratorsProvider.createDirective(
+      'timepicker',
+      'directives/decorators/bootstrap/datepicker/timepicker.html'
     );
   }
 ]);
