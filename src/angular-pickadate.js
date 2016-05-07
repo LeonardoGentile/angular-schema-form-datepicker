@@ -23,7 +23,7 @@ angular.module('schemaForm').directive('pickADate', function () {
     },
     link: function (scope, element, attrs, ngModel) {
       var picker;
-      var timeoutDeduplicate;
+      var timeoutId;
       var pickedElem;
       var runOnceUndone = true;
       //By setting formatSubmit to null we inhibit the
@@ -42,7 +42,7 @@ angular.module('schemaForm').directive('pickADate', function () {
           return;
         }
 
-        if( !externalOptions || !externalOptions.constructor.name === "Object" ){
+        if( !externalOptions || externalOptions.constructor.name !== "Object" ){
 
           if (angular.isDefined(attrs.options) && attrs.options.constructor.name === "Object") {
             externalOptions = attrs.options;
@@ -124,10 +124,11 @@ angular.module('schemaForm').directive('pickADate', function () {
           if( value && picker && value.constructor.name === "Object" ){
 
             picker.stop();
-            clearTimeout( timeoutDeduplicate );
-            timeoutDeduplicate = setTimeout(function() {
-              exec( value );
-            }, 500);
+            // because exec should be run after having un-registered this watcher
+            timeoutId = setTimeout(function() {
+                exec(value);
+                clearTimeout(timeoutId);
+            }, 100);
             onceOptions();
           };
         }, true);
