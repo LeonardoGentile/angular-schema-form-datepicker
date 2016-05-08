@@ -21,6 +21,8 @@ angular.module('schemaForm').directive('pickATime', function () {
     link: function (scope, element, attrs, ngModel) {
       var picker;
       var timeoutId;
+      var timeoutId2;
+      var timeoutId3;
       var pickedElem;
       var runOnceUndone = true;
 
@@ -57,6 +59,31 @@ angular.module('schemaForm').directive('pickATime', function () {
           externalOptions.min = formatTime(externalOptions.min);
         }
 
+        if (externalOptions.format) {
+            runOnceUndone = true;
+            // re-trigger in order to use the formatter with the correct format options
+            var tmpValue = ngModel.$modelValue;
+
+            timeoutId2 = setTimeout(function() {
+                scope.$apply(function(){
+                    ngModel.$modelValue = "";
+                });
+                clearTimeout(timeoutId2);
+            }, 100);
+
+            timeoutId3 = setTimeout(function() {
+                scope.$apply(function(){
+                    ngModel.$modelValue = tmpValue;
+                });
+                clearTimeout(timeoutId3);
+            }, 100);
+
+            // ngModel.$modelValue = "yes";
+            // ngModel.$modelValue = value;
+            // ngModel.$setViewValue("");
+            // ngModel.$setViewValue(value);
+        }
+
         var fullOptions = angular.extend({}, basicOptions, externalOptions);
 
         pickedElem = element.pickatime(fullOptions);
@@ -66,31 +93,37 @@ angular.module('schemaForm').directive('pickATime', function () {
         var defaultFormat = "H:i";
 
         //View format on the other hand we get from the pickadate translation file
-        var viewFormat = $.fn.pickadate.defaults.format;
+        var viewFormat = $.fn.pickatime.defaults.format;
 
         picker = element.pickatime('picker');
 
         // Some things have to run only once or they freeze the browser!
         if (runOnceUndone) {
 
-          //The view value
-          ngModel.$formatters.push(function(value) {
-            if (angular.isUndefined(value) || value === null) {
-              return value;
+          //The view value (how it will visually appear)
+          ngModel.$formatters.push(function cbWrapper(fullOptions) {
+            return function(value) {
+              if (angular.isUndefined(value) || value === null) {
+                return value;
+              }
+
+              //We set 'view' and 'highlight' instead of 'select'
+              //since the latter also changes the input, which we do not want.
+              picker.set('view', value, {format: fullOptions.format || scope.format || defaultFormat});
+              picker.set('highlight', value, {format: fullOptions.format || scope.format || defaultFormat});
+
+              //piggy back on highlight to and let pickadate do the transformation.
+              return picker.get('highlight', viewFormat);
             }
+          }(fullOptions));
 
-            //We set 'view' and 'highlight' instead of 'select'
-            //since the latter also changes the input, which we do not want.
-            picker.set('view', value, {format: scope.format || defaultFormat});
-            picker.set('highlight', value, {format: scope.format || defaultFormat});
 
-            //piggy back on highlight to and let pickadate do the transformation.
-            return picker.get('highlight', viewFormat);
-          });
-
-          ngModel.$parsers.push(function() {
-            return picker.get('select', scope.format || defaultFormat);
-          });
+          // How the model will be actullly saved
+          ngModel.$parsers.push(function cbWrapper(fullOptions) {
+            return function() {
+              return picker.get('select', fullOptions.format || scope.format || defaultFormat);
+            }
+          }(fullOptions));
 
           runOnceUndone = false;
         };
