@@ -1,6 +1,6 @@
-angular.module("schemaForm").run(["$templateCache", function($templateCache) {$templateCache.put("directives/decorators/bootstrap/datepicker/datepicker.html","<div\n    ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess(), \'has-feedback\': form.feedback !== false }\"\n    class=\"form-group {{form.htmlClass}}\">\n\n    <label class=\"control-label\" ng-show=\"showTitle()\">{{form.title}}</label>\n\n    <div ng-class=\"{\'input-group\': (form.fieldAddonLeft || form.fieldAddonRight)}\">\n        <span ng-if=\"form.fieldAddonLeft\"\n            class=\"input-group-addon\"\n            ng-bind-html=\"form.fieldAddonLeft\"></span>\n        <input ng-show=\"form.key\"\n            ng-model=\"$$value$$\"\n            ng-disabled=\"form.readonly\"\n            type=\"text\"\n            name=\"{{form.key.slice(-1)[0]}}\"\n            style=\"background-color: white\"\n            schema-validate=\"form\"\n            pick-a-date=\"form.pickadate\"\n            min-date=\"form.minDate\"\n            max-date=\"form.maxDate\"\n            format=\"form.format\"\n            class=\"form-control {{form.fieldHtmlClass}}\"/>\n\n        <span ng-if=\"form.fieldAddonRight\"\n            ng-bind-html=\"form.fieldAddonRight\"\n            class=\"input-group-addon\"></span>\n    </div>\n    <span ng-if=\"form.feedback !== false\"\n        ng-class=\"evalInScope(form.feedback) || {\'glyphicon\': true, \'glyphicon-ok\': hasSuccess(), \'glyphicon-remove\': hasError() }\"\n        class=\"form-control-feedback\"></span>\n\n    <div ng-show=\"(hasError() && errorMessage(schemaError())) || form.description\"\n        ng-bind-html=\"(hasError() && errorMessage(schemaError())) || form.description\"\n        class=\"help-block\"></div>\n</div>\n");
-$templateCache.put("directives/decorators/bootstrap/datepicker/datetimepicker.html","<div\n    pick-a-date-time=\"form\"\n    ng-model=\"$$value$$\"\n    ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess(), \'has-feedback\': form.feedback !== false }\"\n    class=\"form-group {{form.htmlClass}}\">\n\n    <label class=\"control-label\" ng-show=\"showTitle()\">{{form.title}}</label>\n\n    <div ng-class=\"{\'input-group\': (form.fieldAddonLeft || form.fieldAddonRight)}\">\n        <div class=\"row\">\n            <div class=\"col-xs-12 col-sm-6\">\n                <span ng-if=\"form.fieldAddonLeft\"\n                    ng-bind-html=\"form.fieldAddonLeft\"\n                    class=\"input-group-addon\"></span>\n\n                <input ng-show=\"form.key\"\n                    ng-model=\"form.$$date\"\n                    ng-disabled=\"form.readonly\"\n                    type=\"text\"\n                    name=\"{{form.key.slice(-1)[0]}}\"\n                    style=\"background-color: white\"\n                    schema-validate=\"form\"\n                    pick-a-date=\"form.pickadate\"\n                    min-date=\"form.minDate\"\n                    max-date=\"form.maxDate\"\n                    format=\"form.format\"\n                    class=\"form-control {{form.fieldHtmlClass}}\"/>\n\n                <span ng-if=\"form.fieldAddonRight\"\n                    ng-bind-html=\"form.fieldAddonRight\"\n                    class=\"input-group-addon\"></span>\n            </div>\n\n            <div class=\"col-xs-12 col-sm-6\">\n                <span ng-if=\"form.fieldAddonLeft\"\n                    ng-bind-html=\"form.fieldAddonLeft\"\n                    class=\"input-group-addon\"></span>\n\n                <input ng-show=\"form.key\"\n                    ng-model=\"form.$$time\"\n                    ng-disabled=\"form.readonly\"\n                    type=\"text\"\n                    name=\"{{form.key.slice(-1)[0]}}\"\n                    style=\"background-color: white\"\n                    schema-validate=\"form\"\n                    pick-a-time=\"form.pickatime\"\n                    min-time=\"form.minTime\"\n                    max-time=\"form.maxTime\"\n                    format=\"form.format\"\n                    class=\"form-control {{form.fieldHtmlClass}}\"/>\n\n                <span ng-if=\"form.fieldAddonRight\"\n                    class=\"input-group-addon\"\n                    ng-bind-html=\"form.fieldAddonRight\"></span>\n            </div>\n        </div>\n\n    </div>\n\n    <span ng-if=\"form.feedback !== false\"\n        ng-class=\"evalInScope(form.feedback) ||\n            {\'glyphicon\': true, \'glyphicon-ok\': hasSuccess(), \'glyphicon-remove\': hasError() }\"\n        class=\"form-control-feedback\"></span>\n\n    <div ng-show=\"(hasError() && errorMessage(schemaError())) || form.description\"\n        ng-bind-html=\"(hasError() && errorMessage(schemaError())) || form.description\"\n        class=\"help-block\">\n    </div>\n</div>");
-$templateCache.put("directives/decorators/bootstrap/datepicker/timepicker.html","<div\n    ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess(), \'has-feedback\': form.feedback !== false }\"\n    class=\"form-group {{form.htmlClass}}\">\n\n    <label class=\"control-label\" ng-show=\"showTitle()\">{{form.title}}</label>\n\n    <div ng-class=\"{\'input-group\': (form.fieldAddonLeft || form.fieldAddonRight)}\">\n\n        <span ng-if=\"form.fieldAddonLeft\"\n              class=\"input-group-addon\"\n              ng-bind-html=\"form.fieldAddonLeft\"></span>\n        <input ng-show=\"form.key\"\n            ng-model=\"$$value$$\"\n            ng-disabled=\"form.readonly\"\n            type=\"text\"\n            name=\"{{form.key.slice(-1)[0]}}\"\n            style=\"background-color: white\"\n            schema-validate=\"form\"\n            pick-a-time=\"form.pickatime\"\n            min-time=\"form.minTime\"\n            max-time=\"form.maxTime\"\n            format=\"form.format\"\n            class=\"form-control {{form.fieldHtmlClass}}\"/>\n\n        <span ng-if=\"form.fieldAddonRight\"\n            class=\"input-group-addon\"\n            ng-bind-html=\"form.fieldAddonRight\"></span>\n    </div>\n\n    <span ng-if=\"form.feedback !== false\"\n        ng-class=\"evalInScope(form.feedback) || {\'glyphicon\': true, \'glyphicon-ok\': hasSuccess(), \'glyphicon-remove\': hasError() }\"\n        class=\"form-control-feedback\"></span>\n\n    <div ng-show=\"(hasError() && errorMessage(schemaError())) || form.description\"\n        ng-bind-html=\"(hasError() && errorMessage(schemaError())) || form.description\"\n        class=\"help-block\"></div>\n</div>");}]);
+angular.module("schemaForm").run(["$templateCache", function($templateCache) {$templateCache.put("directives/decorators/bootstrap/datepicker/datepicker.html","<div\n    ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess(), \'has-feedback\': form.feedback !== false }\"\n    class=\"form-group {{form.htmlClass}}\">\n\n    <label class=\"control-label\" ng-show=\"showTitle()\">{{form.title}}</label>\n\n    <div ng-class=\"{\'input-group\': (form.fieldAddonLeft || form.fieldAddonRight)}\">\n        <span ng-if=\"form.fieldAddonLeft\"\n            class=\"input-group-addon\"\n            ng-bind-html=\"form.fieldAddonLeft\"></span>\n        <input ng-show=\"form.key\"\n            ng-model=\"$$value$$\"\n            ng-disabled=\"form.readonly\"\n            type=\"text\"\n            name=\"{{form.key.slice(-1)[0]}}\"\n            style=\"background-color: white\"\n            schema-validate=\"form\"\n            pick-a-date=\"form.pickadate\"\n            min-date=\"form.minDate\"\n            max-date=\"form.maxDate\"\n            format=\"form.format\"\n            class=\"form-control {{form.fieldHtmlClass}}\"/>\n\n        <span ng-if=\"form.fieldAddonRight\"\n            ng-bind-html=\"form.fieldAddonRight\"\n            class=\"input-group-addon\"></span>\n    </div>\n\n    <span ng-if=\"form.feedback !== false\"\n          ng-class=\"evalInScope(form.feedback) || {\'glyphicon\': true, \'glyphicon-ok\': hasSuccess(), \'glyphicon-remove\': hasError() }\"\n          id=\"{{form.key.slice(-1)[0] + \'Status\'}}\"\n          class=\"form-control-feedback\">\n    </span>\n\n    <div class=\"help-block\" sf-message=\"form.description\"></div>\n\n</div>\n");
+$templateCache.put("directives/decorators/bootstrap/datepicker/datetimepicker.html","<div\n    pick-a-date-time=\"form\"\n    ng-model=\"$$value$$\"\n    ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess(), \'has-feedback\': form.feedback !== false }\"\n    class=\"form-group {{form.htmlClass}}\">\n\n    <label class=\"control-label\" ng-show=\"showTitle()\">{{form.title}}</label>\n\n    <div ng-class=\"{\'input-group\': (form.fieldAddonLeft || form.fieldAddonRight)}\">\n        <div class=\"row row-grid\">\n            <div class=\"col-xs-12 col-sm-6\">\n                <span ng-if=\"form.fieldAddonLeft\"\n                    ng-bind-html=\"form.fieldAddonLeft\"\n                    class=\"input-group-addon\"></span>\n\n                <input ng-show=\"form.key\"\n                    ng-model=\"form.$$date\"\n                    ng-disabled=\"form.readonly\"\n                    type=\"text\"\n                    name=\"{{form.key.slice(-1)[0]}}\"\n                    style=\"background-color: white\"\n                    schema-validate=\"form\"\n                    pick-a-date=\"form.pickadate\"\n                    min-date=\"form.minDate\"\n                    max-date=\"form.maxDate\"\n                    class=\"form-control {{form.fieldHtmlClass}}\"/>\n\n                <span ng-if=\"form.fieldAddonRight\"\n                    ng-bind-html=\"form.fieldAddonRight\"\n                    class=\"input-group-addon\"></span>\n            </div>\n\n            <div class=\"col-xs-12 col-sm-6\">\n                <span ng-if=\"form.fieldAddonLeft\"\n                    ng-bind-html=\"form.fieldAddonLeft\"\n                    class=\"input-group-addon\"></span>\n\n                <input ng-show=\"form.key\"\n                    ng-model=\"form.$$time\"\n                    ng-disabled=\"form.readonly\"\n                    type=\"text\"\n                    name=\"{{form.key.slice(-1)[0]}}\"\n                    style=\"background-color: white\"\n                    schema-validate=\"form\"\n                    pick-a-time=\"form.pickatime\"\n                    min-time=\"form.minTime\"\n                    max-time=\"form.maxTime\"\n                    class=\"form-control {{form.fieldHtmlClass}}\"/>\n\n                <span ng-if=\"form.fieldAddonRight\"\n                    ng-bind-html=\"form.fieldAddonRight\"\n                    class=\"input-group-addon\"></span>\n            </div>\n        </div>\n\n    </div>\n\n    <span ng-if=\"form.feedback !== false\"\n          ng-class=\"evalInScope(form.feedback) || {\'glyphicon\': true, \'glyphicon-ok\': hasSuccess(), \'glyphicon-remove\': hasError() }\"\n          id=\"{{form.key.slice(-1)[0] + \'Status\'}}\"\n          class=\"form-control-feedback\">\n    </span>\n\n    <div class=\"help-block\" sf-message=\"form.description\"></div>\n\n</div>");
+$templateCache.put("directives/decorators/bootstrap/datepicker/timepicker.html","<div\n    ng-class=\"{\'has-error\': hasError(), \'has-success\': hasSuccess(), \'has-feedback\': form.feedback !== false }\"\n    class=\"form-group {{form.htmlClass}}\">\n\n    <label class=\"control-label\" ng-show=\"showTitle()\">{{form.title}}</label>\n\n    <div ng-class=\"{\'input-group\': (form.fieldAddonLeft || form.fieldAddonRight)}\">\n\n        <span ng-if=\"form.fieldAddonLeft\"\n              class=\"input-group-addon\"\n              ng-bind-html=\"form.fieldAddonLeft\"></span>\n        <input ng-show=\"form.key\"\n            ng-model=\"$$value$$\"\n            ng-disabled=\"form.readonly\"\n            type=\"text\"\n            name=\"{{form.key.slice(-1)[0]}}\"\n            style=\"background-color: white\"\n            schema-validate=\"form\"\n            pick-a-time=\"form.pickatime\"\n            min-time=\"form.minTime\"\n            max-time=\"form.maxTime\"\n            format=\"form.format\"\n            class=\"form-control {{form.fieldHtmlClass}}\"/>\n\n        <span ng-if=\"form.fieldAddonRight\"\n            ng-bind-html=\"form.fieldAddonRight\"\n            class=\"input-group-addon\"></span>\n    </div>\n\n    <span ng-if=\"form.feedback !== false\"\n          ng-class=\"evalInScope(form.feedback) || {\'glyphicon\': true, \'glyphicon-ok\': hasSuccess(), \'glyphicon-remove\': hasError() }\"\n          id=\"{{form.key.slice(-1)[0] + \'Status\'}}\"\n          class=\"form-control-feedback\">\n    </span>\n\n    <div class=\"help-block\" sf-message=\"form.description\"></div>\n</div>");}]);
 angular.module('schemaForm').directive('pickADate', function () {
 
   //String dates for min and max is not supported
@@ -26,9 +26,8 @@ angular.module('schemaForm').directive('pickADate', function () {
     },
     link: function (scope, element, attrs, ngModel) {
       var picker;
-      var timeoutId;
       var pickedElem;
-      var runOnceUndone = true;
+
       //By setting formatSubmit to null we inhibit the
       //hidden field that pickadate likes to create.
       //We use ngModel formatters instead to format the value.
@@ -39,68 +38,60 @@ angular.module('schemaForm').directive('pickADate', function () {
         formatSubmit: null
       };
 
-      var exec = function( externalOptions ){
-        //Bail out gracefully if pickadate is not loaded.
-        if (!element.pickadate) {
-          return;
+      var externalOptions = scope.pickADate;
+
+      if (!externalOptions || typeof externalOptions !== 'object') {
+
+        if (angular.isDefined(attrs.pickADate) && typeof attrs.pickADate === 'Object') {
+          externalOptions = attrs.pickADate;
         }
+        else {
+          externalOptions = {};
+        };
+      }
 
-        if( !externalOptions || externalOptions.constructor.name !== "Object" ){
+      if (externalOptions.max) {
+        externalOptions.max = formatDate(externalOptions.max);
+      }
+      if (externalOptions.min) {
+        externalOptions.min = formatDate(externalOptions.min);
+      }
 
-          if (angular.isDefined(attrs.options) && attrs.options.constructor.name === "Object") {
-            externalOptions = attrs.options;
-          }
-          else {
-            externalOptions = {};
-          };
-        }
+      var fullOptions = angular.merge({}, basicOptions, externalOptions);
 
-        if (externalOptions.max) {
-            externalOptions.max = formatDate(externalOptions.max);
-        }
-        if (externalOptions.min) {
-            externalOptions.min = formatDate(externalOptions.min);
-        }
+      pickedElem = element.pickadate(fullOptions);
 
-        var fullOptions = angular.extend({}, basicOptions, externalOptions );
-
-        pickedElem = element.pickadate( fullOptions );
-
-        //Defaultformat is for json schema date-time is ISO8601
-        //i.e.  "yyyy-mm-dd"
-        var defaultFormat = 'yyyy-mm-dd';
+      // Defaultformat is for json schema date-time is ISO8601
+      // All the internal date values will be stored with this format.
+      // NOTE: scope.format or fullOptions.format is only for visualization
+      var defaultFormat = 'yyyy-mm-dd';
 
         //View format on the other hand we get from the pickadate translation file
-        var viewFormat    = $.fn.pickadate.defaults.format;
+        // var viewFormat    = $.fn.pickadate.defaults.format;
 
-        picker = element.pickadate('picker');
+      picker = element.pickadate('picker');
 
-        // Some things have to run only once or they freeze the browser!
-        if( runOnceUndone ){
+      // Model to View
+      ngModel.$formatters.push(function(value) {
+        if (angular.isUndefined(value) || value === null) {
+          return value;
+        }
 
-          //The view value
-          ngModel.$formatters.push(function(value) {
-            if (angular.isUndefined(value) || value === null) {
-              return value;
-            }
+        //We set 'view' and 'highlight' instead of 'select'
+        //since the latter also changes the input, which we do not want.
+        picker.set('view', value, {format: defaultFormat});
+        picker.set('highlight', value, {format: defaultFormat});
 
-            //We set 'view' and 'highlight' instead of 'select'
-            //since the latter also changes the input, which we do not want.
-            picker.set('view', value, {format: fullOptions.format || scope.format || defaultFormat});
-            picker.set('highlight', value, {format: fullOptions.format || scope.format || defaultFormat});
+        //piggy back on highlight to and let pickadate do the transformation.
+        // This is the visible value
+        return picker.get('highlight', fullOptions.format || scope.format || defaultFormat );
+      });
 
-            //piggy back on highlight to and let pickadate do the transformation.
-            return picker.get('highlight', viewFormat);
-          });
+      // View to Model
+      ngModel.$parsers.push(function() {
+        return picker.get('select', defaultFormat);
+      });
 
-          ngModel.$parsers.push(function() {
-            return picker.get('select', fullOptions.format || scope.format || defaultFormat);
-          });
-
-          runOnceUndone = false;
-        };
-
-      }; // /exec
 
       //bind once.
       if (angular.isDefined(attrs.minDate)) {
@@ -121,23 +112,6 @@ angular.module('schemaForm').directive('pickADate', function () {
         }, true);
       }
 
-      if (angular.isDefined(attrs.pickADate)) {
-        var onceOptions = scope.$watch('pickADate', function (value) {
-
-          if( value && picker && value.constructor.name === "Object" ){
-
-            picker.stop();
-            // because exec should be run after having un-registered this watcher
-            timeoutId = setTimeout(function() {
-                exec(value);
-                clearTimeout(timeoutId);
-            }, 100);
-            onceOptions();
-          };
-        }, true);
-      };
-
-      exec();
     } // /link
   };
 });
@@ -153,7 +127,6 @@ angular.module('schemaForm').directive('pickADateTime', function () {
       maxTime: '=',
       minDate: '=',
       maxDate: '=',
-      format: '='
     },
     link: function (scope, element, attrs) {
       var momentDateTime = null;
@@ -216,11 +189,7 @@ angular.module('schemaForm').directive('pickATime', function () {
     },
     link: function (scope, element, attrs, ngModel) {
       var picker;
-      var timeoutId;
-      var timeoutId2;
-      var timeoutId3;
       var pickedElem;
-      var runOnceUndone = true;
 
       //By setting formatSubmit to null we inhibit the
       //hidden field that pickatime likes to create.
@@ -232,99 +201,57 @@ angular.module('schemaForm').directive('pickATime', function () {
         formatSubmit: null
       };
 
-      var exec = function(externalOptions) {
-        //Bail out gracefully if pickadate is not loaded.
-        if (!element.pickatime) {
-          return;
+      var externalOptions = scope.pickATime;
+
+      if (!externalOptions || typeof externalOptions !== 'object') {
+
+        if (angular.isDefined(attrs.pickATime) && typeof attrs.pickATime === 'Object') {
+          externalOptions = attrs.pickATime;
         }
-
-        if (!externalOptions || externalOptions.constructor.name !== "Object") {
-
-          if (angular.isDefined(attrs.options) && attrs.options.constructor.name === "Object") {
-            externalOptions = attrs.options;
-          }
-          else {
-            externalOptions = {};
-          };
-        }
-
-        if (externalOptions.max) {
-          externalOptions.max = formatTime(externalOptions.max);
-        }
-        if (externalOptions.min) {
-          externalOptions.min = formatTime(externalOptions.min);
-        }
-
-        if (externalOptions.format) {
-            runOnceUndone = true;
-            // re-trigger in order to use the formatter with the correct format options
-            var tmpValue = ngModel.$modelValue;
-
-            timeoutId2 = setTimeout(function() {
-                scope.$apply(function(){
-                    ngModel.$modelValue = "";
-                });
-                clearTimeout(timeoutId2);
-            }, 100);
-
-            timeoutId3 = setTimeout(function() {
-                scope.$apply(function(){
-                    ngModel.$modelValue = tmpValue;
-                });
-                clearTimeout(timeoutId3);
-            }, 100);
-
-            // ngModel.$modelValue = "yes";
-            // ngModel.$modelValue = value;
-            // ngModel.$setViewValue("");
-            // ngModel.$setViewValue(value);
-        }
-
-        var fullOptions = angular.extend({}, basicOptions, externalOptions);
-
-        pickedElem = element.pickatime(fullOptions);
-
-        //Defaultformat is for json schema date-time is ISO8601
-        //i.e.  "hh:mm"
-        var defaultFormat = "H:i";
-
-        //View format on the other hand we get from the pickadate translation file
-        var viewFormat = $.fn.pickatime.defaults.format;
-
-        picker = element.pickatime('picker');
-
-        // Some things have to run only once or they freeze the browser!
-        if (runOnceUndone) {
-
-          //The view value (how it will visually appear)
-          ngModel.$formatters.push(function cbWrapper(fullOptions) {
-            return function(value) {
-              if (angular.isUndefined(value) || value === null) {
-                return value;
-              }
-
-              //We set 'view' and 'highlight' instead of 'select'
-              //since the latter also changes the input, which we do not want.
-              picker.set('view', value, {format: fullOptions.format || scope.format || defaultFormat});
-              picker.set('highlight', value, {format: fullOptions.format || scope.format || defaultFormat});
-
-              //piggy back on highlight to and let pickadate do the transformation.
-              return picker.get('highlight', viewFormat);
-            }
-          }(fullOptions));
-
-
-          // How the model will be actullly saved
-          ngModel.$parsers.push(function cbWrapper(fullOptions) {
-            return function() {
-              return picker.get('select', fullOptions.format || scope.format || defaultFormat);
-            }
-          }(fullOptions));
-
-          runOnceUndone = false;
+        else {
+          externalOptions = {};
         };
+      }
 
-      }; // /exec
+      if (externalOptions.max) {
+        externalOptions.max = formatTime(externalOptions.max);
+      }
+      if (externalOptions.min) {
+        externalOptions.min = formatTime(externalOptions.min);
+      }
+
+      var fullOptions = angular.merge({}, basicOptions, externalOptions);
+
+      pickedElem = element.pickatime(fullOptions);
+
+      // Defaultformat is for json schema date-time is ISO8601
+      // All the internal time values will be stored with this format.
+      // NOTE: scope.format or fullOptions.format is only for visualization
+      var defaultFormat = "HH:i"; // 24h with a leading zero
+
+      picker = element.pickatime('picker');
+
+      // Model to View
+      ngModel.$formatters.push(function(value) {
+        if (angular.isUndefined(value) || value === null) {
+          return value;
+        }
+
+        // We set 'view' and 'highlight' instead of 'select'
+        // since the latter also changes the input, which we do not want.
+        picker.set('view', value, {format: defaultFormat});
+        picker.set('highlight', value, {format: defaultFormat});
+
+        // piggy back on highlight to and let pickadate do the transformation.
+        // This is the visible value
+        return picker.get('highlight', fullOptions.format || scope.format || defaultFormat );
+      });
+
+      // View to Model
+      ngModel.$parsers.push(function() {
+        return picker.get('select', defaultFormat);
+      });
+
 
       //bind once.
       if (angular.isDefined(attrs.minTime)) {
@@ -344,24 +271,6 @@ angular.module('schemaForm').directive('pickATime', function () {
           }
         }, true);
       }
-
-      if (angular.isDefined(attrs.pickATime)) {
-        var onceOptions = scope.$watch('pickATime', function (value) {
-
-          if( value && picker && value.constructor.name === "Object" ){
-
-            picker.stop();
-            // because exec should be run after having un-registered this watcher
-            timeoutId = setTimeout(function() {
-                exec(value);
-                clearTimeout(timeoutId);
-            }, 100);
-            onceOptions();
-          };
-        }, true);
-      };
-
-       exec();
 
     } // link
   };

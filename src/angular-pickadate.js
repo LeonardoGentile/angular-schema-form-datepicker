@@ -23,9 +23,8 @@ angular.module('schemaForm').directive('pickADate', function () {
     },
     link: function (scope, element, attrs, ngModel) {
       var picker;
-      var timeoutId;
       var pickedElem;
-      var runOnceUndone = true;
+
       //By setting formatSubmit to null we inhibit the
       //hidden field that pickadate likes to create.
       //We use ngModel formatters instead to format the value.
@@ -36,68 +35,60 @@ angular.module('schemaForm').directive('pickADate', function () {
         formatSubmit: null
       };
 
-      var exec = function( externalOptions ){
-        //Bail out gracefully if pickadate is not loaded.
-        if (!element.pickadate) {
-          return;
+      var externalOptions = scope.pickADate;
+
+      if (!externalOptions || typeof externalOptions !== 'object') {
+
+        if (angular.isDefined(attrs.pickADate) && typeof attrs.pickADate === 'Object') {
+          externalOptions = attrs.pickADate;
         }
+        else {
+          externalOptions = {};
+        };
+      }
 
-        if( !externalOptions || externalOptions.constructor.name !== "Object" ){
+      if (externalOptions.max) {
+        externalOptions.max = formatDate(externalOptions.max);
+      }
+      if (externalOptions.min) {
+        externalOptions.min = formatDate(externalOptions.min);
+      }
 
-          if (angular.isDefined(attrs.options) && attrs.options.constructor.name === "Object") {
-            externalOptions = attrs.options;
-          }
-          else {
-            externalOptions = {};
-          };
-        }
+      var fullOptions = angular.merge({}, basicOptions, externalOptions);
 
-        if (externalOptions.max) {
-            externalOptions.max = formatDate(externalOptions.max);
-        }
-        if (externalOptions.min) {
-            externalOptions.min = formatDate(externalOptions.min);
-        }
+      pickedElem = element.pickadate(fullOptions);
 
-        var fullOptions = angular.extend({}, basicOptions, externalOptions );
-
-        pickedElem = element.pickadate( fullOptions );
-
-        //Defaultformat is for json schema date-time is ISO8601
-        //i.e.  "yyyy-mm-dd"
-        var defaultFormat = 'yyyy-mm-dd';
+      // Defaultformat is for json schema date-time is ISO8601
+      // All the internal date values will be stored with this format.
+      // NOTE: scope.format or fullOptions.format is only for visualization
+      var defaultFormat = 'yyyy-mm-dd';
 
         //View format on the other hand we get from the pickadate translation file
-        var viewFormat    = $.fn.pickadate.defaults.format;
+        // var viewFormat    = $.fn.pickadate.defaults.format;
 
-        picker = element.pickadate('picker');
+      picker = element.pickadate('picker');
 
-        // Some things have to run only once or they freeze the browser!
-        if( runOnceUndone ){
+      // Model to View
+      ngModel.$formatters.push(function(value) {
+        if (angular.isUndefined(value) || value === null) {
+          return value;
+        }
 
-          //The view value
-          ngModel.$formatters.push(function(value) {
-            if (angular.isUndefined(value) || value === null) {
-              return value;
-            }
+        //We set 'view' and 'highlight' instead of 'select'
+        //since the latter also changes the input, which we do not want.
+        picker.set('view', value, {format: defaultFormat});
+        picker.set('highlight', value, {format: defaultFormat});
 
-            //We set 'view' and 'highlight' instead of 'select'
-            //since the latter also changes the input, which we do not want.
-            picker.set('view', value, {format: fullOptions.format || scope.format || defaultFormat});
-            picker.set('highlight', value, {format: fullOptions.format || scope.format || defaultFormat});
+        //piggy back on highlight to and let pickadate do the transformation.
+        // This is the visible value
+        return picker.get('highlight', fullOptions.format || scope.format || defaultFormat );
+      });
 
-            //piggy back on highlight to and let pickadate do the transformation.
-            return picker.get('highlight', viewFormat);
-          });
+      // View to Model
+      ngModel.$parsers.push(function() {
+        return picker.get('select', defaultFormat);
+      });
 
-          ngModel.$parsers.push(function() {
-            return picker.get('select', fullOptions.format || scope.format || defaultFormat);
-          });
-
-          runOnceUndone = false;
-        };
-
-      }; // /exec
 
       //bind once.
       if (angular.isDefined(attrs.minDate)) {
@@ -118,23 +109,6 @@ angular.module('schemaForm').directive('pickADate', function () {
         }, true);
       }
 
-      if (angular.isDefined(attrs.pickADate)) {
-        var onceOptions = scope.$watch('pickADate', function (value) {
-
-          if( value && picker && value.constructor.name === "Object" ){
-
-            picker.stop();
-            // because exec should be run after having un-registered this watcher
-            timeoutId = setTimeout(function() {
-                exec(value);
-                clearTimeout(timeoutId);
-            }, 100);
-            onceOptions();
-          };
-        }, true);
-      };
-
-      exec();
     } // /link
   };
 });

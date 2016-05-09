@@ -10,7 +10,6 @@ angular.module('schemaForm').directive('pickADateTime', function () {
       maxTime: '=',
       minDate: '=',
       maxDate: '=',
-      format: '='
     },
     link: function (scope, element, attrs) {
       var momentDateTime = null;

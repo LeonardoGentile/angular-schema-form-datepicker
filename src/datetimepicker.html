@@ -7,7 +7,7 @@
     <label class="control-label" ng-show="showTitle()">{{form.title}}</label>
 
     <div ng-class="{'input-group': (form.fieldAddonLeft || form.fieldAddonRight)}">
-        <div class="row">
+        <div class="row row-grid">
             <div class="col-xs-12 col-sm-6">
                 <span ng-if="form.fieldAddonLeft"
                     ng-bind-html="form.fieldAddonLeft"
@@ -23,7 +23,6 @@
                     pick-a-date="form.pickadate"
                     min-date="form.minDate"
                     max-date="form.maxDate"
-                    format="form.format"
                     class="form-control {{form.fieldHtmlClass}}"/>
 
                 <span ng-if="form.fieldAddonRight"
@@ -46,12 +45,11 @@
                     pick-a-time="form.pickatime"
                     min-time="form.minTime"
                     max-time="form.maxTime"
-                    format="form.format"
                     class="form-control {{form.fieldHtmlClass}}"/>
 
                 <span ng-if="form.fieldAddonRight"
-                    class="input-group-addon"
-                    ng-bind-html="form.fieldAddonRight"></span>
+                    ng-bind-html="form.fieldAddonRight"
+                    class="input-group-addon"></span>
             </div>
         </div>
 

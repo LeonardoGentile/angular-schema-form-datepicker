@@ -20,11 +20,7 @@ angular.module('schemaForm').directive('pickATime', function () {
     },
     link: function (scope, element, attrs, ngModel) {
       var picker;
-      var timeoutId;
-      var timeoutId2;
-      var timeoutId3;
       var pickedElem;
-      var runOnceUndone = true;
 
       //By setting formatSubmit to null we inhibit the
       //hidden field that pickatime likes to create.
@@ -36,99 +32,57 @@ angular.module('schemaForm').directive('pickATime', function () {
         formatSubmit: null
       };
 
-      var exec = function(externalOptions) {
-        //Bail out gracefully if pickadate is not loaded.
-        if (!element.pickatime) {
-          return;
+      var externalOptions = scope.pickATime;
+
+      if (!externalOptions || typeof externalOptions !== 'object') {
+
+        if (angular.isDefined(attrs.pickATime) && typeof attrs.pickATime === 'Object') {
+          externalOptions = attrs.pickATime;
         }
-
-        if (!externalOptions || externalOptions.constructor.name !== "Object") {
-
-          if (angular.isDefined(attrs.options) && attrs.options.constructor.name === "Object") {
-            externalOptions = attrs.options;
-          }
-          else {
-            externalOptions = {};
-          };
-        }
-
-        if (externalOptions.max) {
-          externalOptions.max = formatTime(externalOptions.max);
-        }
-        if (externalOptions.min) {
-          externalOptions.min = formatTime(externalOptions.min);
-        }
-
-        if (externalOptions.format) {
-            runOnceUndone = true;
-            // re-trigger in order to use the formatter with the correct format options
-            var tmpValue = ngModel.$modelValue;
-
-            timeoutId2 = setTimeout(function() {
-                scope.$apply(function(){
-                    ngModel.$modelValue = "";
-                });
-                clearTimeout(timeoutId2);
-            }, 100);
-
-            timeoutId3 = setTimeout(function() {
-                scope.$apply(function(){
-                    ngModel.$modelValue = tmpValue;
-                });
-                clearTimeout(timeoutId3);
-            }, 100);
-
-            // ngModel.$modelValue = "yes";
-            // ngModel.$modelValue = value;
-            // ngModel.$setViewValue("");
-            // ngModel.$setViewValue(value);
-        }
-
-        var fullOptions = angular.extend({}, basicOptions, externalOptions);
-
-        pickedElem = element.pickatime(fullOptions);
-
-        //Defaultformat is for json schema date-time is ISO8601
-        //i.e.  "hh:mm"
-        var defaultFormat = "H:i";
-
-        //View format on the other hand we get from the pickadate translation file
-        var viewFormat = $.fn.pickatime.defaults.format;
-
-        picker = element.pickatime('picker');
-
-        // Some things have to run only once or they freeze the browser!
-        if (runOnceUndone) {
-
-          //The view value (how it will visually appear)
-          ngModel.$formatters.push(function cbWrapper(fullOptions) {
-            return function(value) {
-              if (angular.isUndefined(value) || value === null) {
-                return value;
-              }
-
-              //We set 'view' and 'highlight' instead of 'select'
-              //since the latter also changes the input, which we do not want.
-              picker.set('view', value, {format: fullOptions.format || scope.format || defaultFormat});
-              picker.set('highlight', value, {format: fullOptions.format || scope.format || defaultFormat});
-
-              //piggy back on highlight to and let pickadate do the transformation.
-              return picker.get('highlight', viewFormat);
-            }
-          }(fullOptions));
-
-
-          // How the model will be actullly saved
-          ngModel.$parsers.push(function cbWrapper(fullOptions) {
-            return function() {
-              return picker.get('select', fullOptions.format || scope.format || defaultFormat);
-            }
-          }(fullOptions));
-
-          runOnceUndone = false;
+        else {
+          externalOptions = {};
         };
+      }
 
-      }; // /exec
+      if (externalOptions.max) {
+        externalOptions.max = formatTime(externalOptions.max);
+      }
+      if (externalOptions.min) {
+        externalOptions.min = formatTime(externalOptions.min);
+      }
+
+      var fullOptions = angular.merge({}, basicOptions, externalOptions);
+
+      pickedElem = element.pickatime(fullOptions);
+
+      // Defaultformat is for json schema date-time is ISO8601
+      // All the internal time values will be stored with this format.
+      // NOTE: scope.format or fullOptions.format is only for visualization
+      var defaultFormat = "HH:i"; // 24h with a leading zero
+
+      picker = element.pickatime('picker');
+
+      // Model to View
+      ngModel.$formatters.push(function(value) {
+        if (angular.isUndefined(value) || value === null) {
+          return value;
+        }
+
+        // We set 'view' and 'highlight' instead of 'select'
+        // since the latter also changes the input, which we do not want.
+        picker.set('view', value, {format: defaultFormat});
+        picker.set('highlight', value, {format: defaultFormat});
+
+        // piggy back on highlight to and let pickadate do the transformation.
+        // This is the visible value
+        return picker.get('highlight', fullOptions.format || scope.format || defaultFormat );
+      });
+
+      // View to Model
+      ngModel.$parsers.push(function() {
+        return picker.get('select', defaultFormat);
+      });
+
 
       //bind once.
       if (angular.isDefined(attrs.minTime)) {
@@ -148,24 +102,6 @@ angular.module('schemaForm').directive('pickATime', function () {
           }
         }, true);
       }
-
-      if (angular.isDefined(attrs.pickATime)) {
-        var onceOptions = scope.$watch('pickATime', function (value) {
-
-          if( value && picker && value.constructor.name === "Object" ){
-
-            picker.stop();
-            // because exec should be run after having un-registered this watcher
-            timeoutId = setTimeout(function() {
-                exec(value);
-                clearTimeout(timeoutId);
-            }, 100);
-            onceOptions();
-          };
-        }, true);
-      };
-
-       exec();
 
     } // link
   };
