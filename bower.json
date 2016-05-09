@@ -2,7 +2,7 @@
   "name": "angular-schema-form-datetimepicker",
   "main": [
     "bootstrap-datepicker.js",
-    "datetimepicker.css"
+    "bootstrap-datepicker.css"
   ],
   "version": "0.4.0",
   "authors": [
