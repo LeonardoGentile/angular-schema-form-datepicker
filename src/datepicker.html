@@ -25,11 +25,13 @@
             ng-bind-html="form.fieldAddonRight"
             class="input-group-addon"></span>
     </div>
-    <span ng-if="form.feedback !== false"
-        ng-class="evalInScope(form.feedback) || {'glyphicon': true, 'glyphicon-ok': hasSuccess(), 'glyphicon-remove': hasError() }"
-        class="form-control-feedback"></span>
 
-    <div ng-show="(hasError() && errorMessage(schemaError())) || form.description"
-        ng-bind-html="(hasError() && errorMessage(schemaError())) || form.description"
-        class="help-block"></div>
+    <span ng-if="form.feedback !== false"
+          ng-class="evalInScope(form.feedback) || {'glyphicon': true, 'glyphicon-ok': hasSuccess(), 'glyphicon-remove': hasError() }"
+          id="{{form.key.slice(-1)[0] + 'Status'}}"
+          class="form-control-feedback">
+    </span>
+
+    <div class="help-block" sf-message="form.description"></div>
+
 </div>
