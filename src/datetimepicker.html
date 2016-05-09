@@ -19,11 +19,12 @@
                     type="text"
                     name="{{form.key.slice(-1)[0]}}"
                     style="background-color: white"
+                    placeholder="{{form.date.placeholder }}"
                     schema-validate="form"
-                    pick-a-date="form.pickadate"
-                    min-date="form.minDate"
-                    max-date="form.maxDate"
-                    class="form-control {{form.fieldHtmlClass}}"/>
+                    pick-a-date="form.date.pickadate"
+                    min-date="form.date.minDate"
+                    max-date="form.date.maxDate"
+                    class="form-control {{form.date.fieldHtmlClass}}"/>
 
                 <span ng-if="form.fieldAddonRight"
                     ng-bind-html="form.fieldAddonRight"
@@ -41,11 +42,12 @@
                     type="text"
                     name="{{form.key.slice(-1)[0]}}"
                     style="background-color: white"
+                    placeholder="{{form.time.placeholder }}"
                     schema-validate="form"
-                    pick-a-time="form.pickatime"
-                    min-time="form.minTime"
-                    max-time="form.maxTime"
-                    class="form-control {{form.fieldHtmlClass}}"/>
+                    pick-a-time="form.time.pickatime"
+                    min-time="form.time.minTime"
+                    max-time="form.time.maxTime"
+                    class="form-control {{form.time.fieldHtmlClass}}"/>
 
                 <span ng-if="form.fieldAddonRight"
                     ng-bind-html="form.fieldAddonRight"
