@@ -1,6 +1,4 @@
 <div
-    pick-a-date-time="form"
-    ng-model="$$value$$"
     ng-class="{'has-error': hasError(), 'has-success': hasSuccess(), 'has-feedback': form.feedback !== false }"
     class="form-group {{form.htmlClass}}">
 
@@ -17,10 +15,8 @@
                     ng-model="form.$$date"
                     ng-disabled="form.readonly"
                     type="text"
-                    name="{{form.key.slice(-1)[0]}}"
                     style="background-color: white"
                     placeholder="{{form.date.placeholder }}"
-                    schema-validate="form"
                     pick-a-date="form.date.pickadate"
                     min-date="form.date.minDate"
                     max-date="form.date.maxDate"
@@ -40,10 +36,8 @@
                     ng-model="form.$$time"
                     ng-disabled="form.readonly"
                     type="text"
-                    name="{{form.key.slice(-1)[0]}}"
                     style="background-color: white"
                     placeholder="{{form.time.placeholder }}"
-                    schema-validate="form"
                     pick-a-time="form.time.pickatime"
                     min-time="form.time.minTime"
                     max-time="form.time.maxTime"
@@ -54,6 +48,12 @@
                     class="input-group-addon"></span>
             </div>
         </div>
+
+        <input type="hidden"
+            pick-a-date-time="form"
+            ng-model="$$value$$"
+            name="{{form.key.slice(-1)[0]}}"
+            schema-validate="form">
 
     </div>
 

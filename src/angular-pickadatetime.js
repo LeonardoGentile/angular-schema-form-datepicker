@@ -29,20 +29,20 @@ angular.module('schemaForm').directive('pickADateTime', function () {
         if (value) {
           var date = moment(value, 'YYYY-MM-DD');
 
-          var momentDate = moment()
+          momentDateTime
           .year(date.year())
           .month(date.month())
           .date(date.date());
 
-          scope.ngModel = momentDate.toISOString();
+          scope.ngModel = momentDateTime.toISOString();
         }
       })
 
       scope.$watch('pickADateTime.$$time', function(value) {
         if (value) {
           var time = value.split(':')
-          momentTime = moment().hours(time[0]).minutes(time[1]);
-          scope.ngModel = momentTime.toISOString();
+          momentDateTime = moment().hours(time[0]).minutes(time[1]);
+          scope.ngModel = momentDateTime.toISOString();
         }
       })
     }
