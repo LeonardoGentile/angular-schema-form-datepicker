@@ -166,47 +166,30 @@ angular.module('schemaForm').directive('pickADateTime', function () {
     restrict: 'A',
     scope: {
       ngModel: '=',
-      pickADateTime: '=', // the form
-      minTime: '=',
-      maxTime: '=',
-      minDate: '=',
-      maxDate: '=',
+      pickADateTime: '=', // the form conf obj
     },
     link: function (scope, element, attrs) {
       var momentDateTime = null;
-      var momentTime = null;
-      var momentDate = null;
+      var date;
+      var time;
 
-      //Init
-      if (scope.ngModel && moment(scope.ngModel).isValid()) {
-        momentDateTime = moment(scope.ngModel);
-        scope.pickADateTime.$$date = momentDateTime.format('YYYY-MM-DD');
-        scope.pickADateTime.$$time = momentDateTime.format('HH:mm');
-      }
-      // else {
-      //   momentDateTime = moment.utc().hours('00').minutes('00');
-      // }
+      var defaultDateModelFormat = 'YYYY-MM-DD'; // same as "yyyy-mm-dd" for pickadate
+      var defaultTimeModelFormat = 'HH:mm'; // same as "HH:i" for pickatime
 
-      // scope.$watch('pickADateTime.$$date', function(value) {
-      //   if (value) {
-      //     var date = moment(value, 'YYYY-MM-DD');
-
-      //     momentDateTime
-      //     .year(date.year())
-      //     .month(date.month())
-      //     .date(date.date());
-
-      //     scope.ngModel = momentDateTime.toISOString();
-      //   }
-      // })
-
-      // scope.$watch('pickADateTime.$$time', function(value) {
-      //   if (value) {
-      //     var time = value.split(':')
-      //     momentDateTime = moment().hours(time[0]).minutes(time[1]);
-      //     scope.ngModel = momentDateTime.toISOString();
-      //   }
-      // })
+      // Init: Bind once
+      var onceInit = scope.$watch('ngModel', function(value) {
+        if (value) {
+          if (moment(value).isValid()){
+            momentDateTime = moment(value);
+            scope.pickADateTime.$$date = momentDateTime.format(defaultDateModelFormat);
+            scope.pickADateTime.$$time = momentDateTime.format(defaultTimeModelFormat);
+          }
+          else {
+            scope.ngModel = null;
+          }
+          onceInit();
+        }
+      }, true);
 
       scope.$watch(
         // Observer fn
@@ -218,10 +201,14 @@ angular.module('schemaForm').directive('pickADateTime', function () {
         function(value, oldValue) {
           if (value && value.date && value.time) {
 
-              date = moment(value.date, 'YYYY-MM-DD');
+              date = moment(value.date, defaultDateModelFormat);
               time = value.time.split(':');
 
-              if (!momentDateTime) momentDateTime = momentDateTime = moment.utc().hours('00').minutes('00');
+              if (!momentDateTime) {
+                momentDateTime = moment.utc()
+                  .hours('00')
+                  .minutes('00');
+              }
 
               momentDateTime
                 .year(date.year())
@@ -231,14 +218,12 @@ angular.module('schemaForm').directive('pickADateTime', function () {
                 .minutes(time[1])
                 .seconds("00");
 
-              // scope.pickADateTime.$$datetime = momentDateTime.toISOString();
-              ngModel = momentDateTime.toISOString();
+              scope.ngModel = momentDateTime.toISOString();
 
           }
           else {
             if (value.date && !value.time || !value.date && value.time) {
-              scope.pickADateTime.$$datetime = "INVALID";
-              // ngModel = "INVALID";
+              scope.ngModel = null;
             }
           }
 
@@ -290,7 +275,7 @@ angular.module('schemaForm').directive('pickATime', function () {
 
       var exec = function(externalOptions) {
         //Bail out gracefully if pickadate is not loaded.
-        if (!element.pickadate) {
+        if (!element.pickatime) {
           return;
         }
 

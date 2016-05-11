@@ -37,7 +37,7 @@ angular.module('schemaForm').directive('pickATime', function () {
 
       var exec = function(externalOptions) {
         //Bail out gracefully if pickadate is not loaded.
-        if (!element.pickadate) {
+        if (!element.pickatime) {
           return;
         }
 
