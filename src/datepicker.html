@@ -10,6 +10,7 @@
             ng-bind-html="form.fieldAddonLeft"></span>
         <input ng-show="form.key"
             ng-model="$$value$$"
+            ng-model-options="form.ngModelOptions"
             ng-disabled="form.readonly"
             type="text"
             name="{{form.key.slice(-1)[0]}}"
@@ -20,6 +21,7 @@
             min-date="form.minDate"
             max-date="form.maxDate"
             format="form.format"
+            model-format="form.modelFormat"
             class="form-control {{form.fieldHtmlClass}}"/>
 
         <span ng-if="form.fieldAddonRight"
@@ -34,5 +36,4 @@
     </span>
 
     <div class="help-block" sf-message="form.description"></div>
-
 </div>
