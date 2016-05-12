@@ -24,7 +24,7 @@ angular.module('schemaForm').directive('pickADateTime', function () {
             scope.pickADateTime.$$time = momentDateTime.format(defaultTimeModelFormat);
           }
           else {
-            scope.ngModel = null;
+            scope.ngModel = undefined;
           }
           onceInit();
         }
@@ -62,7 +62,7 @@ angular.module('schemaForm').directive('pickADateTime', function () {
           }
           else {
             if (value.date && !value.time || !value.date && value.time) {
-              scope.ngModel = null;
+              scope.ngModel = undefined;
             }
           }
 
