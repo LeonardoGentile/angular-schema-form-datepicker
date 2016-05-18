@@ -3,11 +3,12 @@ angular.module('schemaForm').directive('pickADateTime', function () {
 
   return {
     restrict: 'A',
+    require: 'ngModel',
     scope: {
       ngModel: '=',
       pickADateTime: '=', // the form conf obj
     },
-    link: function (scope, element, attrs) {
+    link: function (scope, element, attrs, ngModelCtrl) {
       var momentDateTime = null;
       var date;
       var time;
@@ -63,8 +64,17 @@ angular.module('schemaForm').directive('pickADateTime', function () {
           else {
             if (value.date && !value.time || !value.date && value.time) {
               scope.ngModel = undefined;
+
+            }
+            else {
+              scope.ngModel = undefined;
             }
           }
+
+          ngModelCtrl.$setViewValue(scope.ngModel);
+          ngModelCtrl.$commitViewValue();
+          ngModelCtrl.$render();
+
 
         }, true);
     }
