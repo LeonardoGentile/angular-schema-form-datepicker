@@ -22,7 +22,7 @@ angular.module('schemaForm').directive('pickADate', function () {
       format: '=', // visual
       modelFormat: '=', // stored format in the model
     },
-    link: function (scope, element, attrs, ngModel) {
+    link: function (scope, element, attrs, ngModelCtrl) {
       var picker;
       var pickedElem;
       var timeoutId;
@@ -85,23 +85,29 @@ angular.module('schemaForm').directive('pickADate', function () {
         if(runOnceUndone){
 
           // Model => View
-          ngModel.$formatters.push(function(value) {
-            if (angular.isUndefined(value) || value === null) {
+          ngModelCtrl.$formatters.push(function(value) {
+            if (angular.isUndefined(value) || value === null || value === "") {
+              value = "";
+              // These 3 are necessary or editing an empty field will result in non valid form
+              ngModelCtrl.$setViewValue(value);
+              ngModelCtrl.$commitViewValue();
+              ngModelCtrl.$render();
               return value;
             }
+            else {
+              //We set 'view' and 'highlight' instead of 'select'
+              //since the latter also changes the input, which we do not want.
+              picker.set('view', value, {format: modelFormat});
+              picker.set('highlight', value, {format: modelFormat});
 
-            //We set 'view' and 'highlight' instead of 'select'
-            //since the latter also changes the input, which we do not want.
-            picker.set('view', value, {format: modelFormat});
-            picker.set('highlight', value, {format: modelFormat});
-
-            //piggy back on highlight to and let pickadate do the transformation.
-            // This is the visible value
-            return picker.get('highlight', viewFormat);
+              //piggy back on highlight to and let pickadate do the transformation.
+              // This is the visible value
+              return picker.get('highlight', viewFormat);
+            }
           });
 
           // View => Model
-          ngModel.$parsers.push(function(value) {
+          ngModelCtrl.$parsers.push(function(value) {
             return picker.get('select', modelFormat);
           });
 
