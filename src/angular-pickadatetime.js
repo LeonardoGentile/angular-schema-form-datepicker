@@ -1,6 +1,12 @@
 // The only purpose of that directive is to split date and time into two different fields and combine them together when one of the fields is changed.
 angular.module('schemaForm').directive('pickADateTime', function () {
 
+  function commitViewValue(ctrl, value) {
+    ctrl.$setViewValue(value);
+    ctrl.$commitViewValue();
+    ctrl.$render();
+  }
+
   return {
     restrict: 'A',
     require: 'ngModel',
@@ -13,8 +19,8 @@ angular.module('schemaForm').directive('pickADateTime', function () {
       var date;
       var time;
 
-      var defaultDateModelFormat = 'YYYY-MM-DD'; // same as "yyyy-mm-dd" for pickadate
-      var defaultTimeModelFormat = 'HH:mm'; // same as "HH:i" for pickatime
+      var defaultDateModelFormat = 'YYYY-MM-DD';  // same as "yyyy-mm-dd" for pickadate
+      var defaultTimeModelFormat = 'HH:mm';       // same as "HH:i" for pickatime
 
       // Init: Bind once
       var onceInit = scope.$watch('ngModel', function(value) {
@@ -59,22 +65,19 @@ angular.module('schemaForm').directive('pickADateTime', function () {
                 .seconds("00");
 
               scope.ngModel = momentDateTime.toISOString();
-
           }
           else {
+            // TODO: improve this logic
             if (value.date && !value.time || !value.date && value.time) {
-              scope.ngModel = undefined;
-
+              scope.ngModel = "";
             }
             else {
-              scope.ngModel = undefined;
+              scope.ngModel = "";
+
             }
+            commitViewValue(ngModelCtrl, scope.ngModel);
+
           }
-
-          ngModelCtrl.$setViewValue(scope.ngModel);
-          ngModelCtrl.$commitViewValue();
-          ngModelCtrl.$render();
-
 
         }, true);
     }
