@@ -29,8 +29,8 @@ angular.module('schemaForm').directive('pickADate', function () {
       var picker;
       var pickedElem;
       var timeoutId;
-      var runOnceUndone = true;
-
+      var parserFormatterDefined = false;
+      var formatterRanOnce = false;
       //By setting formatSubmit to null we inhibit the
       //hidden field that pickadate likes to create.
       //We use ngModel formatters instead to format the value.
@@ -41,7 +41,7 @@ angular.module('schemaForm').directive('pickADate', function () {
         formatSubmit: null
       };
 
-      var exec = function(externalOptions) {
+      function exec(externalOptions) {
         //Bail out gracefully if pickadate is not loaded.
         if (!element.pickadate) {
           return;
@@ -85,38 +85,35 @@ angular.module('schemaForm').directive('pickADate', function () {
         picker = element.pickadate('picker');
 
         // Some things have to run only once or they freeze the browser!
-        if(runOnceUndone){
-          // WARNING: if form data are available before form is computed -> formatters and parsers won't be executed (they are not defined yet!)
-          // To avoid this, just put the form data on the scope (for editing) after the form has been created, example with a timeout.
-          // This is a current angular limitation: https://github.com/angular/angular.js/issues/3407
-
-          // Model => View
-          ngModelCtrl.$formatters.push(function(value) {
-            if (angular.isUndefined(value) || value === null || value === "") {
-              value = "";
-              ngModelCtrl.$setViewValue(value); // because validation triggers on viewValue
-              return value;
-            }
-            else {
-              //We set 'view' and 'highlight' instead of 'select'
-              //since the latter also changes the input, which we do not want.
-              picker.set('view', value, {format: modelFormat});
-              picker.set('highlight', value, {format: modelFormat});
-
-              //piggy back on highlight to and let pickadate do the transformation.
-              // This is the visible value
-              return picker.get('highlight', viewFormat);
-            }
-          });
-
-          // View => Model
-          ngModelCtrl.$parsers.push(function(value) {
-            return picker.get('select', modelFormat);
-          });
-
-          runOnceUndone = false;
+        if (!parserFormatterDefined) {
+          defineParserAndFormatter(ngModelCtrl, picker, viewFormat, modelFormat);
+          parserFormatterDefined = true;
         }
+
       } // /exec
+
+      var onceInitData = scope.$watch('ngModel', function (value) {
+        if(value && !parserFormatterDefined) {
+          // try to re-run formatters every 250ms until out pickadate formatter is defined
+          var intervalId = setInterval(function(){
+
+            if (formatterRanOnce){
+              clearInterval(intervalId);
+            }
+
+            // Re-run the formatters if data arrives too early (formatters not yet defined)
+            else {
+              var viewValue = ngModelCtrl.$modelValue;
+              for (var i in ngModelCtrl.$formatters) {
+                  viewValue = ngModelCtrl.$formatters[i](viewValue);
+              }
+              ngModelCtrl.$viewValue = viewValue;
+              ngModelCtrl.$render();
+            }
+          }, 250);
+          onceInitData(); // don't run this watch anymore
+        };
+      }, true);
 
       // external options override any other options (to prefer)
       if (angular.isDefined(attrs.pickADate)) {
@@ -127,11 +124,11 @@ angular.module('schemaForm').directive('pickADate', function () {
               picker.stop();
             }
 
-            // because exec should be run after having un-registered this watcher
+            // because exec should run after having un-registered this watcher
             timeoutId = setTimeout(function() {
                 exec(value);
                 clearTimeout(timeoutId);
-            }, 500);
+            }, 250);
             onceOptions();
           };
         }, true);
@@ -160,6 +157,38 @@ angular.module('schemaForm').directive('pickADate', function () {
             }
           }, true);
         }
+      }
+
+      function defineParserAndFormatter(ngModelCtrl, picker, viewFormat, modelFormat) {
+
+        // NOTE: https://github.com/angular/angular.js/issues/3407
+
+        // MODEL => VIEW
+        ngModelCtrl.$formatters.push(function(value) {
+
+          formatterRanOnce = true;
+
+          if (angular.isUndefined(value) || value === null || value === "") {
+            value = "";
+            ngModelCtrl.$setViewValue(value); // because validation triggers on viewValue
+            return value;
+          }
+          else {
+            //We set 'view' and 'highlight' instead of 'select'
+            //since the latter also changes the input, which we do not want.
+            picker.set('view', value, {format: modelFormat});
+            picker.set('highlight', value, {format: modelFormat});
+
+            //piggy back on highlight to and let pickadate do the transformation.
+            // This is the visible value
+            return picker.get('highlight', viewFormat);
+          }
+        });
+
+        // VIEW => MODEL
+        ngModelCtrl.$parsers.push(function(value) {
+          return picker.get('select', modelFormat);
+        });
       }
 
     } // /link
@@ -281,8 +310,8 @@ angular.module('schemaForm').directive('pickATime', function () {
       var picker;
       var pickedElem;
       var timeoutId;
-      var runOnceUndone = true;
-
+      var parserFormatterDefined = false;
+      var formatterRanOnce = false;
       //By setting formatSubmit to null we inhibit the
       //hidden field that pickatime likes to create.
       //We use ngModel formatters instead to format the value.
@@ -293,7 +322,7 @@ angular.module('schemaForm').directive('pickATime', function () {
         formatSubmit: null
       };
 
-      var exec = function(externalOptions) {
+      function exec(externalOptions) {
         //Bail out gracefully if pickadate is not loaded.
         if (!element.pickatime) {
           return;
@@ -335,41 +364,39 @@ angular.module('schemaForm').directive('pickATime', function () {
 
         picker = element.pickatime('picker');
 
-
-
         // Some things have to run only once or they freeze the browser!
-        if(runOnceUndone){
-
-          // Model => View
-          ngModelCtrl.$formatters.push(function(value) {
-            if (angular.isUndefined(value) || value === null || value === "") {
-              value = "";
-              // These 3 are necessary or editing an empty field will result in non valid form
-              ngModelCtrl.$setViewValue(value);
-              ngModelCtrl.$commitViewValue();
-              ngModelCtrl.$render();
-              return value;
-            }
-            else {
-              // We set 'view' and 'highlight' instead of 'select'
-              // since the latter also changes the input, which we do not want.
-              picker.set('view', value, {format: modelFormat});
-              picker.set('highlight', value, {format: modelFormat});
-
-              // piggy back on highlight to and let pickadate do the transformation.
-              // This is the visible value
-              return picker.get('highlight', viewFormat);
-            }
-          });
-
-          // View to Model
-          ngModelCtrl.$parsers.push(function() {
-            return picker.get('select', modelFormat);
-          });
-
-          runOnceUndone = false;
+        if (!parserFormatterDefined) {
+          defineParserAndFormatter(ngModelCtrl, picker, viewFormat, modelFormat);
+          parserFormatterDefined = true;
         }
-      }// /exec
+
+      } // /exec
+
+      /**
+       * Watch initial Data and re-run formatter later if it is not yet defined
+       */
+      var onceInitData = scope.$watch('ngModel', function (value) {
+        if(value && !parserFormatterDefined) {
+          // try to re-run formatters every 250ms until out pickatime formatter is defined
+          var intervalId = setInterval(function(){
+
+            if (formatterRanOnce){
+              clearInterval(intervalId);
+            }
+
+            // Re-run the formatters if data arrives too early (formatters not yet defined)
+            else {
+              var viewValue = ngModelCtrl.$modelValue;
+              for (var i in ngModelCtrl.$formatters) {
+                  viewValue = ngModelCtrl.$formatters[i](viewValue);
+              }
+              ngModelCtrl.$viewValue = viewValue;
+              ngModelCtrl.$render();
+            }
+          }, 250);
+          onceInitData(); // don't run this watch anymore
+        };
+      }, true);
 
       // external options override any other options (to prefer)
       if (angular.isDefined(attrs.pickATime)) {
@@ -413,6 +440,40 @@ angular.module('schemaForm').directive('pickATime', function () {
           }, true);
         }
       }
+
+      function defineParserAndFormatter(ngModelCtrl, picker, viewFormat, modelFormat) {
+
+        // NOTE: https://github.com/angular/angular.js/issues/3407
+
+        // MODEL => VIEW
+        ngModelCtrl.$formatters.push(function(value) {
+
+          formatterRanOnce = true;
+
+          if (angular.isUndefined(value) || value === null || value === "") {
+            value = "";
+            // These 3 are necessary or editing an empty field will result in non valid form
+            ngModelCtrl.$setViewValue(value);
+            return value;
+          }
+          else {
+            // We set 'view' and 'highlight' instead of 'select'
+            // since the latter also changes the input, which we do not want.
+            picker.set('view', value, {format: modelFormat});
+            picker.set('highlight', value, {format: modelFormat});
+
+            // piggy back on highlight to and let pickadate do the transformation.
+            // This is the visible value
+            return picker.get('highlight', viewFormat);
+          }
+        });
+
+        // VIEW TO MODEL
+        ngModelCtrl.$parsers.push(function() {
+          return picker.get('select', modelFormat);
+        });
+      }
+
 
     } // link
   };
