@@ -4,7 +4,7 @@
     "bootstrap-datepicker.js",
     "bootstrap-datepicker.css"
   ],
-  "version": "0.5.0",
+  "version": "0.5.1",
   "authors": [
     "Textalk",
     "David Jensen <david.lgj@gmail.com>",
@@ -16,6 +16,7 @@
   ],
   "keywords": [
     "angular-schema-form",
+    "angular-schema-form-add-on",
     "schema-form",
     "form",
     "json",
