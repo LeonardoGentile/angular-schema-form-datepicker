@@ -70,12 +70,13 @@ angular.module('schemaForm').directive('pickADateTime', function () {
             // TODO: improve this logic
             if (value.date && !value.time || !value.date && value.time) {
               scope.ngModel = "";
+              commitViewValue(ngModelCtrl, scope.ngModel);
             }
-            else {
-              scope.ngModel = "";
+            // else {
+            //   scope.ngModel = "";
 
-            }
-            commitViewValue(ngModelCtrl, scope.ngModel);
+            // }
+
 
           }
 

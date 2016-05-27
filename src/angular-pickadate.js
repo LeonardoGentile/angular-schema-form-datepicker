@@ -83,15 +83,15 @@ angular.module('schemaForm').directive('pickADate', function () {
 
         // Some things have to run only once or they freeze the browser!
         if(runOnceUndone){
+          // WARNING: if form data are available before form is computed -> formatters and parsers won't be executed (they are not defined yet!)
+          // To avoid this, just put the form data on the scope (for editing) after the form has been created, example with a timeout.
+          // This is a current angular limitation: https://github.com/angular/angular.js/issues/3407
 
           // Model => View
           ngModelCtrl.$formatters.push(function(value) {
             if (angular.isUndefined(value) || value === null || value === "") {
               value = "";
-              // These 3 are necessary or editing an empty field will result in non valid form
-              ngModelCtrl.$setViewValue(value);
-              ngModelCtrl.$commitViewValue();
-              ngModelCtrl.$render();
+              ngModelCtrl.$setViewValue(value); // because validation triggers on viewValue
               return value;
             }
             else {
