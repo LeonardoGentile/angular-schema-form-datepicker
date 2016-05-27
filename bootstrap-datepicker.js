@@ -97,7 +97,7 @@ angular.module('schemaForm').directive('pickADate', function () {
           onceInitData();
         }
         else if(value) {
-          // try to re-run formatters every 250ms until our pickadate formatter is defined
+          // try to re-run formatters every 250ms until our pickadate formatter is defined and has ran at least once
           var intervalId = setInterval(function(){
 
             if (formatterRanOnce){
