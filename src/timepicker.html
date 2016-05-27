@@ -5,9 +5,10 @@
     <label class="control-label" ng-show="showTitle()">{{form.title}}</label>
 
     <div ng-class="{'input-group': (form.fieldAddonLeft || form.fieldAddonRight)}">
+
         <span ng-if="form.fieldAddonLeft"
-            class="input-group-addon"
-            ng-bind-html="form.fieldAddonLeft"></span>
+              class="input-group-addon"
+              ng-bind-html="form.fieldAddonLeft"></span>
         <input ng-show="form.key"
             ng-model="$$value$$"
             ng-model-options="form.ngModelOptions"
@@ -17,9 +18,9 @@
             style="background-color: white"
             placeholder="{{form.placeholder || form.schema.placeholder }}"
             schema-validate="form"
-            pick-a-date="form.pickadate"
-            min-date="form.minDate"
-            max-date="form.maxDate"
+            pick-a-time="form.pickatime"
+            min-time="form.minTime"
+            max-time="form.maxTime"
             format="form.format"
             model-format="form.modelFormat"
             class="form-control {{form.fieldHtmlClass}}"/>
