@@ -93,8 +93,11 @@ angular.module('schemaForm').directive('pickADate', function () {
       } // /exec
 
       var onceInitData = scope.$watch('ngModel', function (value) {
-        if(value && !parserFormatterDefined) {
-          // try to re-run formatters every 250ms until out pickadate formatter is defined
+        if (parserFormatterDefined) {
+          onceInitData();
+        }
+        else if(value) {
+          // try to re-run formatters every 250ms until our pickadate formatter is defined
           var intervalId = setInterval(function(){
 
             if (formatterRanOnce){
@@ -376,8 +379,11 @@ angular.module('schemaForm').directive('pickATime', function () {
        * Watch initial Data and re-run formatter later if it is not yet defined
        */
       var onceInitData = scope.$watch('ngModel', function (value) {
-        if(value && !parserFormatterDefined) {
-          // try to re-run formatters every 250ms until out pickatime formatter is defined
+        if (parserFormatterDefined) {
+          onceInitData();
+        }
+        else if(value) {
+          // try to re-run formatters every 250ms until our pickatime formatter is defined and has ran at least once
           var intervalId = setInterval(function(){
 
             if (formatterRanOnce){
@@ -411,7 +417,7 @@ angular.module('schemaForm').directive('pickATime', function () {
             timeoutId = setTimeout(function() {
                 exec(value);
                 clearTimeout(timeoutId);
-            }, 500);
+            }, 250);
             onceOptions();
           };
         }, true);

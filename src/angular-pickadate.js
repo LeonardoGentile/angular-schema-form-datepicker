@@ -90,8 +90,11 @@ angular.module('schemaForm').directive('pickADate', function () {
       } // /exec
 
       var onceInitData = scope.$watch('ngModel', function (value) {
-        if(value && !parserFormatterDefined) {
-          // try to re-run formatters every 250ms until out pickadate formatter is defined
+        if (parserFormatterDefined) {
+          onceInitData();
+        }
+        else if(value) {
+          // try to re-run formatters every 250ms until our pickadate formatter is defined
           var intervalId = setInterval(function(){
 
             if (formatterRanOnce){
